@@ -22,8 +22,10 @@ export WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
 alias bash=/opt/homebrew/bin/bash
 alias gaa="git add ."
 alias gitp="git push"
-alias upworkbot="./Documents/00\ ⌥\ Dev/03_Scripts/Upwork\ Bot/UpworkBotLauncher.sh"
-alias ll="gls -lah --hyperlink=auto --color=auto"
+alias ls="eza"
+alias ll="eza -la --git --git-repos --icons --hyperlink --sort=name"
+alias lt="eza -laT --git --git-repos --icons --hyperlink --level=3 --sort=name"
+alias cd="z"
 alias synas="ssh -v shawnadmin@192.168.0.152 -p 9441"
 alias icat="kitten icat"
 alias cat=prettybat
@@ -66,6 +68,7 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source <(fzf --zsh)
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+eval "$(zoxide init zsh)"
 
 # INIT ZSH
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
