@@ -1,30 +1,29 @@
 set nocompatible
-filetype on
 filetype plugin indent on
 syntax on
 set nobackup
 set noswapfile
+set autoread
 set incsearch
 set ignorecase
-set autoread
 set smartcase
 set showcmd
 set showmode
 set showmatch
 set hlsearch
 set history=1000
-set wildmenu
-set wildmode=list:full
-set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,
 set textwidth=80
 set scrolloff=999
 set foldmethod=indent
 set foldlevel=99
 set foldcolumn=2
+set virtualedit=block
+
 
 
 " COLOR AND LOOK  ---------------------------------------------------------------- {{{
 colorscheme chalk
+set encoding=utf-8
 set number
 set cursorline
 set shiftwidth=4
@@ -38,6 +37,9 @@ hi Folded guifg=#808080 guibg=#3a594b
 hi FoldColumn guibg=#262626 guifg=#6c6c6c
 let &t_Cs = "\e[4:3m"
 let &t_Ce = "\e[4:0m"
+let &t_EI = "\<Esc>[2 q"
+let &t_SI = "\<Esc>[6 q"
+let &t_SR = "\<Esc>[4 q"
 
 " }}}
 
@@ -61,6 +63,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'prabirshrestha/asyncomplete-lsp.vim'
   Plug 'hrsh7th/vim-vsnip-integ'
   Plug 'rafamadriz/friendly-snippets'
+  Plug 'tpope/vim-fugitive'
+  Plug 'airblade/vim-gitgutter'
 
 " Visual QoL
   Plug 'machakann/vim-highlightedyank'
@@ -105,6 +109,7 @@ nnoremap <SPACE> <Nop>
 nnoremap <C-z> <Nop>
 nnoremap s <Nop>| "Remove Select operator
 nnoremap S <Nop>| "Remove Select operator
+nnoremap Q <Nop>| "Remo
 let mapleader=" "
 nnoremap <leader> :
 
@@ -150,7 +155,7 @@ nnoremap <leader>so :FzfxBuffers<CR>| " search buffer - special window to allow 
 nnoremap <leader>sf :RG<CR>| " search files or code with rg
 nnoremap <leader>sl :Lines<CR>| " search files or code with rg
 nnoremap <leader>sh :History<CR>| " reveal previously opened files
-nnoremap <leader>ss :History/<CR>| " reveal previous search terms
+nnoremap <leader>s/ :History/<CR>| " reveal previous search terms
 nnoremap <leader>sm :GlobalMarks<CR>| " reveal global marks only
 nnoremap <leader>sk :CustomKeys<CR>!^<P | " reveal all custom key bindings
 nnoremap m? :BMarks<CR>| " reveal local marks only
@@ -193,15 +198,15 @@ nmap <Esc>[120;9u <Plug>(vsnip-cut-text)| " Use actual Cut key to register to $T
 xmap <Esc>[120;9u <Plug>(vsnip-cut-text)| " Use actual Cut key to register to $TM_SELECTED_TEXT
 
   " vim-lsp keymaps
-nnoremap <silent> <buffer> <leader>gs <plug>(lsp-workspace-symbol)
-nnoremap <silent> <buffer> <leader>gr <plug>(lsp-rename)
-nnoremap <silent> <buffer> <leader>gn <plug>(lsp-next-diagnostic)
-nnoremap <silent> <buffer> <leader>gp <plug>(lsp-previous-diagnostic)
-nnoremap <silent> <buffer> <leader>gh <plug>(lsp-hover-float)
-nnoremap <silent> <buffer> <leader>gt <plug>(lsp-peek-type-definition)
-nnoremap <silent> <buffer> <leader>gi <plug>(lsp-peek-implementation)
-nnoremap <silent> <buffer> <leader>gd <plug>(lsp-peek-definition)
-nnoremap <silent> <buffer> <leader>ga <plug>(lsp-code-action-float)
+nnoremap <silent> <buffer> <leader>js <plug>(lsp-workspace-symbol)
+nnoremap <silent> <buffer> <leader>jr <plug>(lsp-rename)
+nnoremap <silent> <buffer> <leader>jn <plug>(lsp-next-diagnostic)
+nnoremap <silent> <buffer> <leader>jp <plug>(lsp-previous-diagnostic)
+nnoremap <silent> <buffer> <leader>jh <plug>(lsp-hover-float)
+nnoremap <silent> <buffer> <leader>jt <plug>(lsp-peek-type-definition)
+nnoremap <silent> <buffer> <leader>ji <plug>(lsp-peek-implementation)
+nnoremap <silent> <buffer> <leader>jd <plug>(lsp-peek-definition)
+nnoremap <silent> <buffer> <leader>ja <plug>(lsp-code-action-float)
 nnoremap <silent> <buffer> <S-Up> :call lsp#scroll(-4)<CR>| "Shift+Up to scroll definition or hover
 nnoremap <silent> <buffer> <S-Down> :call lsp#scroll(+4)<CR>| "Shift+Down to scroll definition or hover
 
@@ -210,14 +215,24 @@ nnoremap <leader>cc <Plug>(qf_qf_toggle)| " Toggle open quickfix window
 nnoremap <leader>ll <Plug>(qf_loc_toggle)| " Toggle open location window
 nnoremap ~ <C-W><C-W>| " Cycle between open windows
 
+   " Vim-gitgutter
+nmap <leader>hp <Plug>(GitGutterPreviewHunk)
+nmap <leader>hs <Plug>(GitGutterStageHunk)
+nmap <leader>hu <Plug>(GitGutterUndoHunk)
+nmap <leader>hd <Plug>(GitGutterPrevHunk)
+nmap <leader>ht <Plug>(GitGutterNextHunk)
+nmap <leader>gg :GitGutterSignsToggle<CR>
+nmap <leader>gd :GitGutterDiffOrig<CR>
+
+
    " Others or QoL
 noremap <leader>y "+y| " Yank to clipboard, similar to cmd+c
 noremap <leader>p "+p| " Paste from clipboard, similar to cmd+v
 noremap <leader>d "_d| " Delete without yanking to register
 noremap <leader>D "_D| " Delete without yanking to register
+noremap <leader>c "_c| " Change without yanking to register
+noremap <leader>C "_C| " Change without yanking to register
 noremap x "_x| " Delete without yanking to register
-noremap c "_c| " Change without yanking to register
-noremap C "_C| " Change without yanking to register
 noremap Y y$| " Yank to end of line
 nmap <leader>s <plug>(SubversiveSubstitute)
 nmap <leader>ss <plug>(SubversiveSubstituteLine)
@@ -534,7 +549,7 @@ augroup vimrcAutoView
     autocmd!
     " Autosave & Load Views.
 augroup end
-    autocmd BufWritePost,BufLeave,WinLeave ?* if MakeViewCheck() | mkview | endif
+    autocmd BufWritePost ?* if MakeViewCheck() | mkview | endif
     autocmd BufWinEnter ?* if MakeViewCheck() | silent loadview | endif
 
 " For Pear Tree
@@ -704,7 +719,7 @@ endfunction
         \ 'onspace': ['b\%[uffer]','colo\%[rscheme]'],
         \ 'alwayson': v:true,
         \ 'popupattrs': {
-            \ 'borderchars': ['─', '│', '─', '│', '┌', '', '┘', '└'],
+            \ 'borderchars': ['─', '│', '─', '│', '┌', ' ', '┘', '└'],
             \ 'borderhighlight': ['Normal'],
             \ 'highlight': 'Normal',
             \ 'border': [1, 1, 1, 1],
@@ -723,7 +738,7 @@ endfunction
       \ 'fuzzy': v:true,
       \ 'alwayson': v:true,
       \ 'popupattrs': {
-          \ 'borderchars': ['─', '│', '─', '│', '┌', '', '┘', '└'],
+          \ 'borderchars': ['─', '│', '─', '│', '┌', ' ', '┘', '└'],
           \ 'borderhighlight': ['Normal'],
           \ 'highlight': 'Normal',
           \ 'border': [1, 1, 1, 1],
@@ -742,8 +757,39 @@ endfunction
       \ })
 
 
-    " Apply the configuration
 autocmd VimEnter * call g:VimSuggestSetOptions(g:VimSuggest)
+
+
+ " Vim-gitgutter Config
+let g:gitgutter_map_keys = 0
+let g:gitgutter_signs=0
+let g:gitgutter_preview_win_floating=1
+let g:gitgutter_floating_window_options=    {
+        \ 'line': 'cursor+1',
+        \ 'col': 'cursor',
+        \ 'moved': 'any',
+        \ 'borderchars': ['─', '│', '─', '│', '┌', '󰊢 ', '┘', '└'],
+        \ 'borderhighlight': ['Normal'],
+        \ 'highlight': 'Normal',
+        \ 'border': [1, 1, 1, 1],
+        \ 'padding': [0, 1, 0, 1],
+        \ 'maxheight': 20
+        \}
+    let g:gitgutter_sign_added              = '+'
+    let g:gitgutter_sign_modified           = '~'
+    let g:gitgutter_sign_removed            = '_'
+    let g:gitgutter_sign_removed_first_line = '‾'
+    let g:gitgutter_sign_removed_above_and_below = '_¯'
+    let g:gitgutter_sign_modified_removed   = '~_'
+augroup GitGutterOnSave
+    autocmd!
+    autocmd BufWritePost * GitGutter
+augroup END
+
+highlight GitGutterAdd    guifg=#5faf87
+highlight GitGutterChange guifg=#ffd787
+highlight GitGutterDelete guifg=#d75f5f
+
 " }}}
 
 
@@ -792,9 +838,9 @@ function! ActivateStatusline()
 
     if !exists("b:GitBranch")
         let  b:GitBranch = ''
-        setlocal statusline=%#StslinePriColorBG#\ %{StslineMode()}%#StslineSecColorBG#%{get(b:,'coc_git_status',b:GitBranch)}%{get(b:,'coc_git_blame','')}%#StslineBackColorFGPriColorBG#%#StslinePriColorFG#\ %{&readonly?\"\ \":\"\"}%F\ %#StslineModColorFG#%{&modified?\"\ \":\"\"}%=%#StslinePriColorFG#\ %{b:FiletypeIcon}%{&filetype}\ %#StslineSecColorFG#%#StslineSecColorBG#%{&fenc!='utf-8'?\"\ \":''}%{&fenc!='utf-8'?&fenc:''}%{&fenc!='utf-8'?\"\ \":''}%#StslinePriColorFGSecColorBG#%#StslinePriColorBG#\ %p\%%\ %#StslinePriColorBGBold#%l%#StslinePriColorBG#/%L\ :%c\
+        setlocal statusline=%#StslinePriColorBG#\ %{StslineMode()}%#StslineSecColorBG#%#StslineBackColorFGPriColorBG#%#StslinePriColorFG#\ %{&readonly?\"\ \":\"\"}%F\ %#StslineModColorFG#%{&modified?\"\ \":\"\"}%=%#StslinePriColorFG#\ %{b:FiletypeIcon}%{&filetype}\ %#StslineSecColorFG#%#StslineSecColorBG#%{&fenc!='utf-8'?\"\ \":''}%{&fenc!='utf-8'?&fenc:''}%{&fenc!='utf-8'?\"\ \":''}%#StslinePriColorFGSecColorBG#%#StslinePriColorBG#\ %p\%%\ %#StslinePriColorBGBold#%l%#StslinePriColorBG#/%L\ :%c\ | "This comment prevents the trailing whitespace from being removed
     else
-         setlocal statusline=%#StslinePriColorBG#\ %{StslineMode()}%#StslineSecColorBG#%{get(b:,'coc_git_status',b:GitBranch)}%{get(b:,'coc_git_blame','')}%#StslineBackColorFGPriColorBG#%#StslinePriColorFG#\ %{&readonly?\"\ \":\"\"}%F\ %#StslineModColorFG#%{&modified?\"\ \":\"\"}%=%#StslinePriColorFG#\ %{b:FiletypeIcon}%{&filetype}\ %#StslineSecColorFG#%#StslineSecColorBG#%{&fenc!='utf-8'?\"\ \":''}%{&fenc!='utf-8'?&fenc:''}%{&fenc!='utf-8'?\"\ \":''}%#StslinePriColorFGSecColorBG#%#StslinePriColorBG#\ %p\%%\ %#StslinePriColorBGBold#%l%#StslinePriColorBG#/%L\ :%c\
+setlocal statusline=%#StslinePriColorBG#\ %{StslineMode()}%#StslineSecColorBG#%{exists('b:GitBranch')\ &&\ b:GitBranch\ !=\ ''\ ?\ \'\ \'.b:GitBranch.'\ '\ :\ ''}%#StslineBackColorFGPriColorBG#%#StslinePriColorFG#\ %{&readonly?\"\ \":\"\"}%F\ %#StslineModColorFG#%{&modified?\"\ \":\"\"}%=%#StslinePriColorFG#\ %{b:FiletypeIcon}%{&filetype}\ %#StslineSecColorFG#%#StslineSecColorBG#%{&fenc!='utf-7'?\"\ \":''}%{&fenc!='utf-8'?&fenc:''}%{&fenc!='utf-8'?\"\ \":''}%#StslinePriColorFGSecColorBG#%#StslinePriColorBG#\ %p\%%\ %#StslinePriColorBGBold#%l%#StslinePriColorBG#/%L\ :%c\ | "This comment prevents the trailing whitespace from being removed
     endif
 
 endfunction
@@ -803,10 +849,10 @@ endfunction
 " Define Inactive statusline
 function! DeactivateStatusline()
     if !exists("b:GitBranch") || b:GitBranch == ''
-        setlocal statusline=%#StslineSecColorBG#\ INACTIVE\ %#StslineSecColorBG#%{get(b:,'coc_git_statusline',b:GitBranch)}%{get(b:,'coc_git_blame','')}%#StslineBackColorFGSecColorBG#%#StslineBackColorBG#\ %{&readonly?\"\ \":\"\"}%F\ %#StslineModColorFG#%{&modified?\"\ \":\"\"}%=%#StslineBackColorBG#\ %{b:FiletypeIcon}%{&filetype}\ %#StslineSecColorFGBackColorBG#%#StslineSecColorBG#\ %p\%%\ %l/%L\ :%c\
+        setlocal statusline=%#StslineSecColorBG#\ INACTIVE\ %#StslineSecColorBG#%{b:GitBranch}%#StslineBackColorFGSecColorBG#%#StslineBackColorBG#\ %{&readonly?\"\ \":\"\"}%F\ %#StslineModColorFG#%{&modified?\"\ \":\"\"}%=%#StslineBackColorBG#\ %{b:FiletypeIcon}%{&filetype}\ %#StslineSecColorFGBackColorBG#%#StslineSecColorBG#\ %p\%%\ %l/%L\ :%c\ | "This comment prevents the trailing whitespace from being removed
 
     else
-        setlocal statusline=%#StslineSecColorBG#%{get(b:,'coc_git_statusline',b:GitBranch)}%{get(b:,'coc_git_blame','')}%#StslineBackColorFGSecColorBG#%#StslineBackColorBG#\ %{&readonly?\"\ \":\"\"}%F\ %#StslineModColorFG#%{&modified?\"\ \":\"\"}%=%#StslineBackColorBG#\ %{b:FiletypeIcon}%{&filetype}\ %#StslineSecColorFGBackColorBG#%#StslineSecColorBG#\ %p\%%\ %l/%L\ :%c\
+        setlocal statusline=%#StslineSecColorBG#\ %{b:GitBranch}\ %#StslineBackColorFGSecColorBG#%#StslineBackColorBG#\ %{&readonly?\"\ \":\"\"}%F\ %#StslineModColorFG#%{&modified?\"\ \":\"\"}%=%#StslineBackColorBG#\ %{b:FiletypeIcon}%{&filetype}\ %#StslineSecColorFGBackColorBG#%#StslineSecColorBG#\ %p\%%\ %l/%L\ :%c\ | "This comment prevents the trailing whitespace from being removed
     endif
 
 endfunction
@@ -885,25 +931,25 @@ endfunction
 
 
 " Get git branch name
-
 function! GetGitBranch()
-let b:GitBranch=""
-try
+let b:GitBranch=''
 
-    let l:dir=expand('%:p:h')
-    let l:gitrevparse = system("git -C ".l:dir." rev-parse --abbrev-ref HEAD")
-    if !v:shell_error
-        let b:GitBranch="   ".substitute(l:gitrevparse, '\n', '', 'g')." "
-        execute 'highlight StslineBackColorFGPriColorBG guifg=' . g:StslineBackColor ' guibg=' . g:StslineSecColor
+    if exists('*FugitiveIsGitDir') && FugitiveIsGitDir()
+      let l:branch_name = FugitiveHead()
+      let [a, m, r] = GitGutterGetHunkSummary()
+      let l:hunk_summary = ''
+      if a > 0 || m > 0 || r > 0
+          let l:hunk_summary = printf(' +%d ~%d -%d', a, m, r)
+      endif
+      let b:GitBranch = '    ' . l:branch_name . l:hunk_summary
+      execute 'highlight StslineBackColorFGPriColorBG guifg=' . g:StslineBackColor . ' guibg=' . g:StslineSecColor
     endif
-catch
-endtry
+
 endfunction
 
 
 
 " Get filetype & custom icon. Put your most used file types first for optimized performance.
-
 function! GetFileType()
 
 if &filetype == 'sh' || &filetype == 'zsh'
@@ -963,20 +1009,13 @@ let b:FiletypeIcon = ' '
 endif
 endfunction
 
-
-
-" Get git branch name after entering a buffer
-augroup GetGitBranch
-    autocmd!
-    autocmd BufEnter * call GetGitBranch()
-augroup END
-
-
 " Set active / inactive statusline after entering, leaving buffer
 augroup SetStslineline
     autocmd!
     autocmd BufEnter,WinEnter * call ActivateStatusline()
+    autocmd User GitGutter call GetGitBranch() | call ActivateStatusline()
     autocmd BufLeave,WinLeave * call DeactivateStatusline()
+
 augroup END
 
 " }}}
