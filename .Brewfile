@@ -42,6 +42,11 @@ cask "sidenotes"
 cask "slidepad"
 cask "zoom"
 cask "trex"
+cask "tabtab"
+cask "qbittorrent"
+cask "google-chrome"
+cask "dropzone"
 
 # Mac App Store
 mas "Things3", id: 904280696
+mas "Spark-Classic-Email", id: 1176895641

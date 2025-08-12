@@ -1,4 +1,6 @@
 from datetime import datetime
+import subprocess
+import re
 from kitty.boss import get_boss
 from kitty.fast_data_types import Screen, add_timer
 from kitty.rgb import to_color
@@ -65,29 +67,35 @@ def _get_datetime_cell() -> dict:
     now = datetime.now().strftime("%d-%m-%Y %H:%M")
     return {"icon": CALENDAR_CLOCK_ICON, "icon_bg_color": "#2a7fac", "text": now}
 
-
 def _get_battery_cell() -> dict:
+    """Gets the battery status and percentage on a macOS machine."""
     cell = {"icon": "", "icon_bg_color": "#b9ab4a", "text": ""}
 
     try:
-        with open("/sys/class/power_supply/BAT0/status", "r") as f:
-            status = f.read()
-        with open("/sys/class/power_supply/BAT0/capacity", "r") as f:
-            percent = int(f.read())
+        pmset_output = subprocess.check_output(["pmset", "-g", "batt"], text=True)
 
-        if status == "Charging\n":
-            cell["icon"] = CHARGING_ICON
+        match = re.search(r"(\d+)%;\s(.*?);", pmset_output)
+
+        if match:
+            percent = int(match.group(1))
+            status = match.group(2).strip()
+
+            if status == "charging":
+                cell["icon"] = CHARGING_ICON
+            else:
+                cell["icon"] = UNPLUGGED_ICONS[
+                    min(UNPLUGGED_ICONS.keys(), key=lambda x: abs(percent - x))
+                ]
+
+            cell["text"] = f"{percent}%"
+
         else:
-            cell["icon"] = UNPLUGGED_ICONS[
-                min(UNPLUGGED_ICONS.keys(), key=lambda x: abs(percent - x))
-            ]
-        cell["text"] = str(percent) + "%"
+            cell["text"] = "Err"
 
-    except FileNotFoundError:
+    except (subprocess.CalledProcessError, FileNotFoundError):
         cell["text"] = "Err"
 
     return cell
-
 
 def _create_cells() -> list[dict]:
     return [_get_battery_cell(), _get_active_process_name_cell(), _get_datetime_cell()]
