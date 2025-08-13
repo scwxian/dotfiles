@@ -27,12 +27,14 @@ alias ll="eza -la --git --git-repos --icons --hyperlink --sort=name"
 alias lt="eza -laT --git --git-repos --icons --hyperlink --level=3 --sort=name"
 alias cd="z"
 alias synas="ssh -v shawnadmin@192.168.0.152 -p 9441"
+alias synasoff="sudo shutdown -h now"
 alias icat="kitten icat"
 alias cat=prettybat
 alias rg='batgrep --color=auto'
 alias man=batman
 alias watch='batwatch --color=auto'
 alias diff='batdiff --color=auto'
+alias find='fd'
 
 # -------- BEGIN PLUGIN CONFIGS
 ## FZF CONFIG

@@ -19,6 +19,7 @@ if [ "$system_type" = "Darwin" ]; then
 	if [ -f "$HOME/.Brewfile" ]; then
 		echo "Updating homebrew bundle"
 		brew bundle --global
+		bat cache --build
 	fi
 
 fi
