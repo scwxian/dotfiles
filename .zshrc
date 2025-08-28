@@ -13,6 +13,7 @@ setopt PROMPT_SUBST
 # ENV VARS
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="$PATH:/bin"
+PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
 export PATH="/opt/homebrew/bin:$PATH"
 export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock

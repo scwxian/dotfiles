@@ -27,6 +27,7 @@ brew "eza"
 brew "zsh-autocomplete"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
+brew "gnu-sed"
 
 
 # Casks
