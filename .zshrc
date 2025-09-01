@@ -13,7 +13,7 @@ setopt PROMPT_SUBST
 # ENV VARS
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="$PATH:/bin"
-PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
 export PATH="/opt/homebrew/bin:$PATH"
 export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
@@ -30,12 +30,14 @@ alias cd="z"
 alias synas="ssh -v shawnadmin@192.168.0.152 -p 9441"
 alias synasoff="sudo shutdown -h now"
 alias icat="kitten icat"
+alias ssh="kitten ssh"
 alias cat=prettybat
 alias rg='batgrep --color=auto'
 alias man=batman
 alias watch='batwatch --color=auto'
 alias diff='batdiff --color=auto'
 alias find='fd'
+alias nerdctl='nerdctl.lima'
 
 # -------- BEGIN PLUGIN CONFIGS
 ## FZF CONFIG

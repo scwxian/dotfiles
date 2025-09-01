@@ -396,6 +396,7 @@ let g:ale_fixers = {
 \   'html': ['prettier'],
 \   'c': ['clang-format'],
 \   'ansible': ['ansible-lint'],
+\   'yaml': ['yamlfix', 'yamlfmt'],
 \   '*': ['trim_whitespace', 'remove_trailing_lines'],
 \}
 let g:ale_lint_on_save = 1
