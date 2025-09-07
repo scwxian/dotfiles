@@ -12,7 +12,7 @@ set showmode
 set showmatch
 set hlsearch
 set history=1000
-set textwidth=80
+set textwidth=120
 set scrolloff=999
 set foldmethod=indent
 set foldlevel=99
