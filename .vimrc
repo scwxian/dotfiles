@@ -12,7 +12,7 @@ set showmode
 set showmatch
 set hlsearch
 set history=1000
-set textwidth=120
+" set textwidth=120
 set scrolloff=999
 set foldmethod=indent
 set foldlevel=99
@@ -89,6 +89,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'svermeulen/vim-subversive'
   Plug 'romainl/vim-qf'
   Plug 'kshenoy/vim-signature'
+  Plug 'AndrewRadev/splitjoin.vim'
 
 
 " Other Add-on Features
@@ -97,6 +98,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'rhysd/vim-healthcheck'
   Plug 'tpope/vim-eunuch'
   Plug 'girishji/vimsuggest'
+  Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown'}
 
 call plug#end()
 
@@ -137,6 +139,8 @@ inoremap <silent> <Esc>b <C-o><Plug>CamelCaseMotion_b| " alt+left behaves like M
 inoremap <silent> <Esc>[1;3A <C-o>{| " alt+up behaves like Mac text cursor
 inoremap <silent> <Esc>[1;3B <C-o>}| " alt+down behaves like Mac text cursor
 inoremap <M-BS> <C-W>|  "alt+backspace deletes by word
+inoremap <C-Up> <C-o>g<Up>| " move up single line even on wrapped lines
+inoremap <C-Down> <C-o>g<Down>|  " move down single line even on wrapped lines
 
     " Yank cycling with yank-stack
 nmap ð <Plug>yankstack_substitute_newer_paste| "Cmd+p to cycle yank stack
@@ -440,11 +444,18 @@ function! s:on_lsp_buffer_enabled() abort
         setlocal signcolumn=auto
 endfunction
 
+if executable('typescript-language-server')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'typescript-language-server',
+        \ 'cmd': {server_info->['typescript-language-server', '--stdio']},
+        \ 'allowlist': ['javascript', 'javascriptreact', 'typescript', 'typescriptreact'],
+        \ })
+endif
+
     augroup lsp_install
         au!
         autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
     augroup END
-
 
 " asyncomplete menu settings
 let g:asyncomplete_auto_completeopt = 0
@@ -790,6 +801,11 @@ augroup END
 highlight GitGutterAdd    guifg=#5faf87
 highlight GitGutterChange guifg=#ffd787
 highlight GitGutterDelete guifg=#d75f5f
+
+" vim instant markdown
+let g:instant_markdown_slow = 1
+let g:instant_markdown_mermaid = 1
+let g:instant_markdown_theme = 'dark'
 
 " }}}
 

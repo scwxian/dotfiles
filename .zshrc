@@ -38,6 +38,7 @@ alias watch='batwatch --color=auto'
 alias diff='batdiff --color=auto'
 alias find='fd'
 alias nerdctl='nerdctl.lima'
+alias workdir='cd /Users/scwxian/Documents/00 ⌥ Dev'
 
 # -------- BEGIN PLUGIN CONFIGS
 ## FZF CONFIG
