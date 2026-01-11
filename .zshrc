@@ -23,6 +23,7 @@ export WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
 alias bash=/opt/homebrew/bin/bash
 alias gaa="git add ."
 alias gitp="git push"
+alias gitlog="git log --oneline --graph --decorate"
 alias ls="eza"
 alias ll="eza -la --git --git-repos --icons --hyperlink --sort=name"
 alias lt="eza -laT --git --git-repos --icons --hyperlink --level=3 --sort=name"
@@ -32,7 +33,7 @@ alias synasoff="sudo shutdown -h now"
 alias icat="kitten icat"
 alias ssh="kitten ssh"
 alias cat=prettybat
-alias rg='batgrep --color=auto'
+alias grep='batgrep --color=auto'
 alias man=batman
 alias watch='batwatch --color=auto'
 alias diff='batdiff --color=auto'

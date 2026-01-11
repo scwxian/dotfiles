@@ -28,8 +28,10 @@ brew "yadm"
 brew "yamlfix"
 brew "yamlfmt"
 brew "zoxide"
+brew "zsh-autocomplete"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
+brew "lazysql"
 
 # Casks
 cask "font-terminess-ttf-nerd-font"

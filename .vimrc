@@ -12,7 +12,6 @@ set showmode
 set showmatch
 set hlsearch
 set history=1000
-" set textwidth=120
 set scrolloff=999
 set foldmethod=indent
 set foldlevel=99
@@ -156,8 +155,8 @@ imap Ð <C-o>:IPaste<CR>| "Shift+Cmd to open Interactive Paste Window
 nnoremap <C-t> :Files<CR>| " search files
 nnoremap <C-r> :History:<CR>| " search ex cmds
 nnoremap <leader>so :FzfxBuffers<CR>| " search buffer - special window to allow ctrl+d to delete buffers
-nnoremap <leader>sf :RG<CR>| " search files or code with rg
-nnoremap <leader>sl :Lines<CR>| " search files or code with rg
+nnoremap <leader>sf :Files<CR>| " search files with rg
+nnoremap <leader>sl :Rg<CR>| " search for existing lines in files open in buffer via rg
 nnoremap <leader>sh :History<CR>| " reveal previously opened files
 nnoremap <leader>s/ :History/<CR>| " reveal previous search terms
 nnoremap <leader>sm :GlobalMarks<CR>| " reveal global marks only
@@ -529,40 +528,6 @@ function! IconPreprocessor(options, matches)
 endfunction
 
 let g:asyncomplete_preprocessor = [function('IconPreprocessor')]
-
-" For Saving File Views
-let g:skipview_files = [
-            \ '[EXAMPLE PLUGIN BUFFER]'
-            \ ]
-function! MakeViewCheck()
-    if has('quickfix') && &buftype =~ 'nofile'
-        " Buffer is marked as not a file
-        return 0
-    endif
-    if empty(glob(expand('%:p')))
-        " File does not exist on disk
-        return 0
-    endif
-    if len($TEMP) && expand('%:p:h') == $TEMP
-        " We're in a temp dir
-        return 0
-    endif
-    if len($TMP) && expand('%:p:h') == $TMP
-        " Also in temp dir
-        return 0
-    endif
-    if index(g:skipview_files, expand('%')) >= 0
-        " File is in skip list
-        return 0
-    endif
-    return 1
-endfunction
-augroup vimrcAutoView
-    autocmd!
-    " Autosave & Load Views.
-augroup end
-    autocmd BufWritePost ?* if MakeViewCheck() | mkview | endif
-    autocmd BufWinEnter ?* if MakeViewCheck() | silent loadview | endif
 
 " For Pear Tree
 let g:pear_tree_smart_openers = 1
