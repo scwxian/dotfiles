@@ -17,6 +17,7 @@ set foldmethod=indent
 set foldlevel=99
 set foldcolumn=2
 set virtualedit=block
+set regexpengine=0
 
 
 
@@ -39,7 +40,6 @@ let &t_Ce = "\e[4:0m"
 let &t_EI = "\<Esc>[2 q"
 let &t_SI = "\<Esc>[6 q"
 let &t_SR = "\<Esc>[4 q"
-
 " }}}
 
 " PLUGINS ---------------------------------------------------------------- {{{
@@ -769,9 +769,15 @@ highlight GitGutterDelete guifg=#d75f5f
 
 " vim instant markdown
 let g:instant_markdown_slow = 1
-let g:instant_markdown_mermaid = 1
+let g:instant_markdown_mermaid = 0
 let g:instant_markdown_theme = 'dark'
+let g:instant_markdown_autoscroll = 1
 
+" vim-visual-multi
+hi! VM_Mono ctermfg=0 ctermbg=134 guifg=#000000 guibg=#5faf87
+hi! link VM_Extend Visual
+hi! VM_Cursor ctermfg=0 ctermbg=134 guifg=#000000 guibg=#609CD9
+hi! VM_Insert ctermfg=0 ctermbg=134 guifg=#000000 guibg=#9e7cc1
 " }}}
 
 
