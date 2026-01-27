@@ -50,6 +50,7 @@ cask "tabtab"
 cask "qbittorrent"
 cask "google-chrome"
 cask "dropzone"
+cask "brilliant"
 
 # Mac App Store
 mas "Things3", id: 904280696
