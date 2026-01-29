@@ -72,6 +72,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'bounceme/poppy.vim'
   Plug 'junegunn/limelight.vim'
   Plug 'romainl/vim-cool'
+  Plug 'farmergreg/vim-lastplace'
 
 " Practical QoL like Text Navigation and Editing
   Plug 'bkad/CamelCaseMotion'
@@ -152,10 +153,9 @@ xmap Ð :IPaste<CR>| "Shift+Cmd to open Interactive Paste Window
 imap Ð <C-o>:IPaste<CR>| "Shift+Cmd to open Interactive Paste Window
 
     " FZF Keymaps
-nnoremap <C-t> :Files<CR>| " search files
-nnoremap <C-r> :History:<CR>| " search ex cmds
+nnoremap <leader>s: :History:<CR>| " search ex cmds
 nnoremap <leader>so :FzfxBuffers<CR>| " search buffer - special window to allow ctrl+d to delete buffers
-nnoremap <leader>sf :Files<CR>| " search files with rg
+nnoremap <leader>ss :Files<CR>| " search files with rg
 nnoremap <leader>sl :Rg<CR>| " search for existing lines in files open in buffer via rg
 nnoremap <leader>sh :History<CR>| " reveal previously opened files
 nnoremap <leader>s/ :History/<CR>| " reveal previous search terms
@@ -214,7 +214,7 @@ nnoremap <silent> <buffer> <S-Up> :call lsp#scroll(-4)<CR>| "Shift+Up to scroll 
 nnoremap <silent> <buffer> <S-Down> :call lsp#scroll(+4)<CR>| "Shift+Down to scroll definition or hover
 
    " quickfix/location list
-nnoremap <leader>cc <Plug>(qf_qf_toggle)| " Toggle open quickfix window
+nnoremap <leader>lq <Plug>(qf_qf_toggle)| " Toggle open quickfix window
 nnoremap <leader>ll <Plug>(qf_loc_toggle)| " Toggle open location window
 nnoremap ~ <C-W><C-W>| " Cycle between open windows
 
@@ -237,9 +237,9 @@ noremap <leader>c "_c| " Change without yanking to register
 noremap <leader>C "_C| " Change without yanking to register
 noremap x "_x| " Delete without yanking to register
 noremap Y y$| " Yank to end of line
-nmap <leader>s <plug>(SubversiveSubstitute)
-nmap <leader>ss <plug>(SubversiveSubstituteLine)
-nmap <leader>S <plug>(SubversiveSubstituteToEndOfLine)
+nmap s <plug>(SubversiveSubstitute)
+nmap sl <plug>(SubversiveSubstituteLine)
+nmap S <plug>(SubversiveSubstituteToEndOfLine)
 noremap <leader>ww :w<CR>| " Quick Save
 noremap <leader>qq :q<CR>| " Quick Exit if no edits are done, great for read-only files and prevents accidetal exits if changes were made
 noremap <leader>wq :wq<CR>| " Quick Save and quit
@@ -778,6 +778,9 @@ hi! VM_Mono ctermfg=0 ctermbg=134 guifg=#000000 guibg=#5faf87
 hi! link VM_Extend Visual
 hi! VM_Cursor ctermfg=0 ctermbg=134 guifg=#000000 guibg=#609CD9
 hi! VM_Insert ctermfg=0 ctermbg=134 guifg=#000000 guibg=#9e7cc1
+
+" vim-lastplace
+let g:lastplace_open_folds = 0
 " }}}
 
 

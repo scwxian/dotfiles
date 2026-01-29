@@ -32,6 +32,14 @@ brew "zsh-autocomplete"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 brew "lazysql"
+brew "yazi"
+brew "ffmpeg"
+brew "sevenzip"
+brew "jq"
+brew "poppler"
+brew "resvg"
+brew "imagemagick"
+
 
 # Casks
 cask "font-terminess-ttf-nerd-font"

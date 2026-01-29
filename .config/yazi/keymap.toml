@@ -1,0 +1,37 @@
+# Navigation
+[mgr]
+prepend_keymap = [
+## File Navigation
+{on = "<A-Up>" , run = "arrow -10%" ,desc = "Move cursor up half page"},
+{on = "<A-Down>" , run = "arrow 10%" ,desc = "Move cursor down half page"},
+{on = "<D-Up>" , run = "arrow top" ,desc = "Go to top"},
+{on = "<D-Down>" , run = "arrow bot" ,desc = "Go to bottom"},
+
+## Select Files with Tab
+{on = "<Tab>" , run = [ "toggle", "arrow 1" ] ,desc = "Toggle the current selection state"},
+
+## Preview Pane
+{on = [ "<S-Up>" ] , run = 'seek -5'},
+{on = [ "<S-Down>" ] , run = 'seek 5'},
+
+# Search Files and Directories
+{on = ["s", "f" ] , run = "search --via=fd" ,desc = "Search files by name via fd"},
+{on = ["s", "l" ] , run = "search --via=rg" ,desc = "Search files by content via ripgrep"},
+{on = ["s", "s" ] , run = "plugin fzf" ,desc = "Jump to a file/directory via fzf"},
+{on = ["s","h" ] , run = "plugin zoxide" ,desc = "Jump to a directory via zoxide"},
+
+## Directory Bookmarks
+{on = [ "g", "r" ] , run = 'shell -- ya emit cd "$(git rev-parse --show-toplevel)"' ,desc = "Go to Project Root"},
+{on = [ "g", "w" ] , run = 'cd "~/Documents/00 ⌥ Dev"' ,desc = "Go to Dev Directory"},
+
+## Special
+{on = "<Space>", run = 'shell -- qlmanage -p "$@" > /dev/null 2>&1 & sleep 0.1; osascript -e "tell application \"System Events\" to set frontmost of process \"qlmanage\" to true"', desc = "Open file in Quicklook"},
+]
+
+[input]
+prepend_keymap = [
+{on   = "<Esc>" , run  = [ "close" ] ,desc = "Cancel input"},
+]
+
+# todo
+# Quick Look

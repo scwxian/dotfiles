@@ -1,0 +1,28 @@
+"$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
+
+[mgr]
+ratio          = [ 1, 2, 5 ]
+sort_by        = "extension"
+linemode       = "size"
+show_hidden    = true
+scrolloff      = 255
+mouse_events   = [ "scroll", "touch" ]
+title_format   = "YZ: {cwd}"
+
+[preview]
+wrap            = "yes"
+tab_size        = 4
+image_quality   = 60
+
+[input]
+cursor_blink = true
+
+[[plugin.prepend_fetchers]]
+id  = "git"
+url = "*"
+run = "git"
+
+[[plugin.prepend_fetchers]]
+id  = "git"
+url = "*/"
+run = "git"
